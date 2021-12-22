@@ -45,6 +45,14 @@ Route::get('/contact', function () {
 */
 
 /* week3 lesson1 third section */
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/about', [HomeController::class, 'about']);
-Route::get('/contact', [HomeController::class, 'contact']);
+// Route::get('/', [HomeController::class, 'index']);
+// Route::get('/about', [HomeController::class, 'about']);
+// Route::get('/contact', [HomeController::class, 'contact']);
+
+
+/* week4 lesson1 */
+Route::resource('posts', HomeController::class);
+
+/* week4 lesson2 */
+/* week4 lesson1 */
+// Route::get('/posts/create', [HomeController::class, 'create'])->name('create');
