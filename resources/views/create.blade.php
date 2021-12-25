@@ -24,6 +24,18 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <select class="form-control @error('description') is-invalid @enderror" name="category_id" id="category">
+                        <option value="">Select category</option>
+                        @foreach($category as $cat)
+                            <option value="{{$cat->id}}">{{$cat->category_name}}</option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                        <br>
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
                 <button type="submit" class="btn btn-primary">Post</button>
                 <a href="/posts" class="btn btn-success">Back</a>
             </form>

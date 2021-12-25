@@ -7,6 +7,7 @@
         <div class="card-body">
             <h5 class="card-title">{{$post->name}}</h5>
             <p class="card-text">{{$post->description}}</p>
+            <p class="card-text">{{'Category : ' . $post->categories->category_name}}</p>
             <a href="/posts" class="btn btn-success">Back</a>
             <hr>
         </div>

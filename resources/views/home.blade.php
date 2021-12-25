@@ -3,7 +3,9 @@
 <div class="container">
     <div>
         <a href="/posts/create" class="btn btn-success">New Post</a>
+        <a href="logout" class="btn btn-default bg-dark text-white">Logout</a>
     </div>
+    
     <br>
     <div class="card">
         <h5 class="card-header text-center">Content</h5>
@@ -11,6 +13,7 @@
             @foreach($data as $post)
             <h5 class="card-title">{{$post->name}}</h5>
             <p class="card-text">{{$post->description}}</p>
+            <p class="card-text">{{'Category : ' . $post->categories->category_name}}</p>
             <div class="form-row">
                 <a style="height:40px; margin-right:10px;" href=" /posts/{{$post->id}}" class="btn btn-primary">More</a>
                 <a style="height:40px; margin-right:10px;" href="/posts/{{$post->id}}/edit" class="btn btn-warning">Edit</a>

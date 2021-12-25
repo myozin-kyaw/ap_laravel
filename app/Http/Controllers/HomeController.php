@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 
@@ -29,7 +30,8 @@ class HomeController extends Controller
      */
     public function create()
     {
-        return view('create');
+        $category = Category::all();
+        return view('create', compact('category'));
     }
 
     /**
@@ -40,18 +42,20 @@ class HomeController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        // $validated = $request->validate([
-        //     'name' => 'required|unique:posts|max:255',
-        //     'description' => 'required:posts|max:255',
-        // ]);
         // $post = new Post();
         // $post->name = $request->name;
         // $post->description = $request->description;
         // $post->save();
-        Post::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+
+        // week 4
+        // Post::create([
+        //     'name' => $request->name,
+        //     'description' => $request->description,
+        //     'category_id' => $request->category_id
+        // ]);
+        // week 5
+        $validated = $request->validated();
+        Post::create($validated);
         return redirect('/posts');
     }
 
@@ -64,7 +68,7 @@ class HomeController extends Controller
     public function show(Post $post) #($id) Route model binding
     {
         // $post = Post::findOrFail($id);
-        dd($post->categories->category_name);
+        // dd($post->categories->category_name);
         return view('more', compact('post'));
     }
 
@@ -77,7 +81,8 @@ class HomeController extends Controller
     public function edit(Post $post)
     {
         // $post = Post::findOrFail($id);
-        return view('edit', compact('post'));
+        $category = Category::all();
+        return view('edit', compact('post','category'));
     }
 
     /**
@@ -89,7 +94,7 @@ class HomeController extends Controller
      */
     public function update(StorePostRequest $request, Post $post) #($id)
     {
-        // $validated = $request->validate([
+        // $validated = $request->validated([
         //     'name' => 'required|unique:posts|max:255',
         //     'description' => 'required:posts|max:255',
         // ]);
@@ -97,10 +102,13 @@ class HomeController extends Controller
         // $post->name = $request->name;
         // $post->description = $request->description;
         // $post->save();
-        $post->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        // $post->update([
+        //     'name' => $request->name,
+        //     'description' => $request->description,
+        //     'category_id' => $request->category_id
+        // ]);
+        $validated = $request->validated();
+        $post->update($validated);
         return redirect('/posts');
     }
 
