@@ -19,7 +19,7 @@ class HomeController extends Controller
         // $data = ['Home_key'=>'Home_value'];
         # dd($data); // dump and die
         // $data = Post::all(); // call data
-        $data = Post::orderBy('id', 'desc')->get();
+        $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
          return view('home', compact('data'));
     }
 
@@ -69,6 +69,11 @@ class HomeController extends Controller
     {
         // $post = Post::findOrFail($id);
         // dd($post->categories->category_name);
+        // week5.2
+        // if($post->user_id != auth()->id()) {
+        //     abort(403);
+        // }
+        $this->authorize('view', $post);
         return view('more', compact('post'));
     }
 
@@ -82,6 +87,10 @@ class HomeController extends Controller
     {
         // $post = Post::findOrFail($id);
         $category = Category::all();
+        // if($post->user_id != auth()->id()) {
+        //     abort(403);
+        // }
+        $this->authorize('view', $post);
         return view('edit', compact('post','category'));
     }
 

@@ -52,10 +52,9 @@ Route::get('/contact', function () {
 
 
 /* week4 lesson1 */
-Route::resource('posts', HomeController::class)->middleware(['auth:sanctum', 'verified']);
-
+Route::resource('/posts', HomeController::class)->middleware(['auth:sanctum', 'verified']);
 Route::get('logout', [AuthController:: class, 'logout']);
 /* week4 lesson2 */
 /* week4 lesson1 */
 // Route::get('/posts/create', [HomeController::class, 'create'])->name('create');
-Route::get('/posts', [HomeController::class, 'index']);
+// Route::get('/posts', [HomeController::class, 'index']);
