@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Mail\PostStore;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StorePostRequest;
 
 class HomeController extends Controller
@@ -19,8 +22,14 @@ class HomeController extends Controller
         // $data = ['Home_key'=>'Home_value'];
         # dd($data); // dump and die
         // $data = Post::all(); // call data
-        $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
-         return view('home', compact('data'));
+        // dd(Post::pluck('name'));
+        
+        /* week6.2 */
+        // Mail::raw('Hello World', function($msg) {
+        //     $msg->to('silent@gmail.com')->subject('We have New Service Discount for you');
+        // });
+        $data = Post::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        return view('home', compact('data'));
     }
 
     /**
@@ -55,8 +64,9 @@ class HomeController extends Controller
         // ]);
         // week 5
         $validated = $request->validated();
-        Post::create($validated);
-        return redirect('/posts');
+        $post = Post::create($validated + ['user_id'=>Auth::user()->id]);
+        // Mail::to('silent@gmail.com')->send(new PostStore($post));
+        return redirect('/posts')->with('status', config('alert.alert_message.created'));
     }
 
     /**
@@ -118,7 +128,7 @@ class HomeController extends Controller
         // ]);
         $validated = $request->validated();
         $post->update($validated);
-        return redirect('/posts');
+        return redirect('/posts')->with('status', config('alert.alert_message.updated'));
     }
 
     /**
@@ -131,6 +141,6 @@ class HomeController extends Controller
     {
         // $post = Post::findOrFail($id)->delete();
         $post->delete();
-        return redirect('/posts');
+        return redirect('/posts')->with('delete', config('alert.alert_message.deleted'));
     }
 }

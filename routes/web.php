@@ -1,5 +1,7 @@
 <?php
 
+use App\Test;
+use App\Container;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -58,3 +60,52 @@ Route::get('logout', [AuthController:: class, 'logout']);
 /* week4 lesson1 */
 // Route::get('/posts/create', [HomeController::class, 'create'])->name('create');
 // Route::get('/posts', [HomeController::class, 'index']);
+
+/* Week6.1 */
+// Route::get('/', function() {
+
+//     $container = new Container();
+
+//     $container->bind('ttt', function() {
+//         return new Test();
+//     });
+
+//     $test = $container->resolve('ttt');
+//     dd($test->sth());
+// });
+
+// Route::get('/', function() {
+
+//     app()->bind('test', function() {
+//         return new Test('Silent');
+//     });
+//     $test = resolve('test');
+//     dd($test);
+// });
+
+// Route::get('/', function() {
+
+//     app()->bind(App\Test::class, function() {
+//         return new Test('Silent');
+//     });
+//     $test = resolve(App\Test::class);
+//     dd($test);
+// });
+
+// Route::get('/', function() {
+
+//     // app()->bind(App\Test::class, function() {
+//     //     return new Test('Silent');
+//     // });
+//     $test = resolve(App\Test::class);
+//     dd($test);
+// });
+
+// Route::get('/', function() {
+
+//     app()->bind('App\Test::class', function() {
+//         return new Test('Silent');
+//     });
+//     $test = resolve('App\Test::class');
+//     dd($test);
+// });

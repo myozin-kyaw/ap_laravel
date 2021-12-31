@@ -6,8 +6,19 @@
         <a href="logout" class="btn btn-default bg-dark text-white">Logout</a>
         <div style="float:right;"><b>{{Auth::user()->name}}</b></div>
     </div>
-    
     <br>
+    @if (session('status'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> {{ session('status') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+    </div>
+    @endif
+    @if (session('delete'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> {{ session('delete') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
+    </div>
+    @endif
     <div class="card">
         <h5 class="card-header text-center">Content</h5>
         <div class="card-body">
@@ -22,7 +33,7 @@
                 <form action="/posts/{{$post->id}}" method="post">
                 @csrf
                 @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" id="confirm_delete" class="btn btn-danger">Delete</button>
                 </form>
             </div>
             <hr>
