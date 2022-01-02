@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Events\PostCreatedEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
+use App\Notifications\PostNotification;
+use Illuminate\Support\Facades\Notification;
 
 class HomeController extends Controller
 {
@@ -21,7 +25,11 @@ class HomeController extends Controller
         # dd($data); // dump and die
         // $data = Post::all(); // call data
         $data = Post::where('user_id', auth()->id())->orderBy('id', 'desc')->get();
-         return view('home', compact('data'));
+        // $user = User::find(1);
+        // $user->notify(new PostNotification()); # Using user model
+        // // Notification::send(User::find(1), new PostNotification()); # Using Facade;
+        // dd('Mail Sent Successful with Database');
+        return view('home', compact('data'));
     }
 
     /**
@@ -56,7 +64,8 @@ class HomeController extends Controller
         // ]);
         // week 5
         $validated = $request->validated();
-        Post::create($validated + ['user_id'=>Auth::user()->id]);
+        $post = Post::create($validated + ['user_id'=>Auth::user()->id]);
+        event(new PostCreatedEvent($post));
         // return redirect('/posts')->with('status', 'Post was successfully created!');
         return redirect('/posts')->with('status', config('alert.alert_message.created'));
     }
